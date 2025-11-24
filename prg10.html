@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="jquery-3.7.1.min.js"></script>
+    <style>
+        div {
+            border: solid 1pt brown;
+            width: 500px;
+            height:150px;
+            margin: 10px; padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Use ajax() method (without Jquery) to add the text content from the text file by sending ajax request. -->
+<h1>AJAX & jQuery</h1>
+<h2>Load Text file using AJAX without jQuery</h2>
+<button onclick="loadDoc()">Change Content</button>
+<div id="loadText"></div>
+
+    <script>
+    function loadDoc() {
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function() {
+           loadText.innerHTML = this.responseText;
+        };
+        xhr.open("GET", "content.txt", true);
+        xhr.send();
+      }
+    </script>
+
+<h2>Load Text file using AJAX with jQuery</h2>
+<button id="btnLoad">Change Content using jQuery</button>
+<div id="loadjqText"></div>
+<script>
+    $("#btnLoad").click(function(){
+  $.ajax({url: "content.txt", success: function(result){
+    $("#loadjqText").html(result);
+  }});
+});
+</script>
+<h2>getJSON in jQuery</h2>
+<button id="btnGetJson">GetJSON content </button>
+<div id="sinfo"></div>
+
+<script>
+    $("#btnGetJson").click(function(){
+    $.getJSON('student.json',function(result) {
+    $("#sinfo").html("Name: "+result.sname);
+      $("#sinfo").append("<br> USN: "+result.usn);
+      $("#sinfo").append("<br> Department:"+result.department);
+    });
+});
+
+</script>
+<h2>parseJSON in jQuery</h2>
+<button id="btnParse">ParseJson </button>
+<div id="info"></div>
+
+<script>
+    $("#btnParse").click(function(){
+        let txt = '{"name":"weblab", "code":"BCSL504"}'
+        let obj = jQuery.parseJSON(txt);
+        $("#info").html("Name: "+obj.name);
+        $("#info").append("<br> Code: "+obj.code);
+      
+    });
+</script>
+</body>
+</html>
